@@ -1,4 +1,4 @@
-FROM microsoft/aspnetcore-build AS build
+FROM microsoft/dotnet:2-sdk AS build
 ARG PROJECT_VERSION
 ENV DOTNET_CLI_TELEMETRY_OPTOUT = 1
 WORKDIR /src
