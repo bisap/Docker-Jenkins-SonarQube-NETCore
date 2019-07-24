@@ -1,0 +1,10 @@
+version: '3.4'
+services:
+  calculation:
+    image: calculation
+    build:
+      network: host
+      context: .
+      args:
+        PROJECT_VERSION: 1
+      dockerfile: calculation/Dockerfile 
