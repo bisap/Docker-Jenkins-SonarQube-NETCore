@@ -3,6 +3,10 @@ ARG PROJECT_VERSION
 ENV DOTNET_CLI_TELEMETRY_OPTOUT = 1
 WORKDIR /src
 
+RUN apt-get update && apt-get install -y \
+    openjdk-8-jre-headless
+
+RUN apt-get clean
 COPY . .
 
 RUN dotnet restore calculation/calculation.csproj
