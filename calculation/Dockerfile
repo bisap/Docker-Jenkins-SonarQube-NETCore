@@ -6,7 +6,7 @@ WORKDIR /src
 COPY . .
 
 RUN dotnet restore calculation/calculation.csproj
-RUN dotnet test ./calculation.tests/calculation.tests.csproj \
+RUN dotnet test calculation.tests/calculation.tests.csproj \
         --configuration Release \
         --logger:"trx;LogFileName=testresult.xml" \
         /p:CollectCoverage=true \
