@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.1-sdk AS build
+FROM microsoft/aspnetcore-build AS build
 ARG PROJECT_VERSION
 ENV DOTNET_CLI_TELEMETRY_OPTOUT = 1
 WORKDIR /src
@@ -30,7 +30,7 @@ RUN dotnet sonarscanner end
 
 RUN dotnet publish calculation.csproj -c Release -o /app --no-restore
 
-FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
+FROM microsoft/aspnetcore
 WORKDIR /app
 COPY --from=build /app .
 ENTRYPOINT ["dotnet", "calculation.dll"]
