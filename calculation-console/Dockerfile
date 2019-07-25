@@ -38,3 +38,4 @@ FROM microsoft/aspnetcore
 WORKDIR /app
 COPY --from=build /app .
 ENTRYPOINT ["dotnet", "calculation-console.dll"]
+
