@@ -7,4 +7,4 @@ services:
       context: .
       args:
         PROJECT_VERSION: 1
-      dockerfile: calculation/Dockerfile 
+      dockerfile: calculation-console/Dockerfile 
