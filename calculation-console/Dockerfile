@@ -24,11 +24,8 @@ RUN dotnet tool install --global dotnet-sonarscanner
 ENV PATH="${PATH}:/root/.dotnet/tools"
 RUN dotnet sonarscanner begin /k:"devops" /v:${PROJECT_VERSION} \
     /d:sonar.host.url=http://139.59.47.153:9000 \ 
-	/d:sonar.cs.opencover.reportsPaths="/src/**/TestResults/opencover.xml" \ 
-	/d:sonar.cs.vstest.reportsPaths="/src/**/TestResults/testresult.xml" \ 
-	/d:sonar.scm.disabled=true /d:sonar.coverage.dtdVerification=true \ 
-	/d:sonar.coverage.exclusions="*Tests*.cs,*testresult*.xml,*opencover*.xml" \ 
-	/d:sonar.test.exclusions="*Tests*.cs,*testresult*.xml,*opencover*.xml"
+	/d:sonar.cs.opencover.reportsPaths="/src/**/TestResults/opencover.xml" \ 	
+	/d:sonar.coverage.exclusions="*Tests*.cs,*testresult*.xml,*opencover*.xml" 	
 RUN dotnet build calculation-console.csproj -c Release -o /app --no-restore 
 RUN dotnet sonarscanner end
 
