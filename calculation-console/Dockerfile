@@ -28,7 +28,7 @@ RUN dotnet sonarscanner begin /k:"devops" /v:${PROJECT_VERSION} \
 	/d:sonar.cs.vstest.reportsPaths="/src/**/TestResults/testresult.xml" \ 
 	/d:sonar.scm.disabled=true /d:sonar.coverage.dtdVerification=true \ 
 	/d:sonar.coverage.exclusions="*Tests*.cs" 
-RUN dotnet build calculation-console.csproj -c Release -o /app --no-restore 
+RUN dotnet build 
 RUN dotnet sonarscanner end
 
 RUN dotnet publish calculation-console.csproj -c Release -o /app --no-restore
