@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
 RUN apt-get clean
 COPY . .
 
-RUN dotnet restore calculation/calculation.csproj
+RUN dotnet restore calculation-console/calculation-console.csproj
 RUN dotnet test calculation.tests/calculation.tests.csproj \
         --configuration Release \
         --logger:"trx;LogFileName=testresult.xml" \
@@ -19,7 +19,7 @@ RUN dotnet test calculation.tests/calculation.tests.csproj \
 
 RUN dotnet build-server shutdown
 
-WORKDIR /src/calculation
+WORKDIR /src/calculation-console
 RUN dotnet tool install --global dotnet-sonarscanner
 ENV PATH="${PATH}:/root/.dotnet/tools"
 RUN dotnet sonarscanner begin /k:"devops" /v:${PROJECT_VERSION} \
@@ -29,12 +29,12 @@ RUN dotnet sonarscanner begin /k:"devops" /v:${PROJECT_VERSION} \
 	/d:sonar.scm.disabled=true /d:sonar.coverage.dtdVerification=true \ 
 	/d:sonar.coverage.exclusions="*Tests*.cs,*testresult*.xml,*opencover*.xml" \ 
 	/d:sonar.test.exclusions="*Tests*.cs,*testresult*.xml,*opencover*.xml"
-RUN dotnet build calculation.csproj -c Release -o /app --no-restore 
+RUN dotnet build calculation-console.csproj -c Release -o /app --no-restore 
 RUN dotnet sonarscanner end
 
-RUN dotnet publish calculation.csproj -c Release -o /app --no-restore
+RUN dotnet publish calculation-console.csproj -c Release -o /app --no-restore
 
 FROM microsoft/aspnetcore
 WORKDIR /app
 COPY --from=build /app .
-ENTRYPOINT ["dotnet", "calculation.dll"]
+ENTRYPOINT ["dotnet", "calculation-console.dll"]
