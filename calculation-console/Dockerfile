@@ -27,7 +27,8 @@ RUN dotnet sonarscanner begin /k:"devops" /v:${PROJECT_VERSION} \
 	/d:sonar.cs.opencover.reportsPaths="/src/**/TestResults/opencover.xml" \ 
 	/d:sonar.cs.vstest.reportsPaths="/src/**/TestResults/testresult.xml" \ 
 	/d:sonar.scm.disabled=true /d:sonar.coverage.dtdVerification=true \ 
-	/d:sonar.coverage.exclusions="*Tests*.cs" 
+	/d:sonar.coverage.exclusions="*Tests*.cs,*testresult*.xml,*opencover*.xml" \ 
+	/d:sonar.test.exclusions="*Tests*.cs,*testresult*.xml,*opencover*.xml"
 RUN dotnet build 
 RUN dotnet sonarscanner end
 
