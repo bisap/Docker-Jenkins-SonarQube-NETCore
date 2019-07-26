@@ -20,7 +20,7 @@ RUN dotnet test testcoverage.sln \
 RUN dotnet build-server shutdown
 
 WORKDIR /src/calculation-console
-#RUN dotnet tool install --global dotnet-sonarscanner
+RUN dotnet tool install --global dotnet-sonarscanner
 ENV PATH="${PATH}:/root/.dotnet/tools"
 RUN dotnet sonarscanner begin /k:"devops" /v:${PROJECT_VERSION} \
     /d:sonar.host.url=http://localhost:9000 \ 
