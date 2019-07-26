@@ -10,7 +10,7 @@ RUN apt-get clean
 COPY . .
 
 RUN dotnet restore calculation-console/calculation-console.csproj
-RUN dotnet test testcoverage.sln \
+RUN dotnet test calculation.tests/calculation.tests.csproj \
         --configuration Release \
         --logger:"trx;LogFileName=testresult.xml" \
         /p:CollectCoverage=true \
