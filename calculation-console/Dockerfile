@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2-sdk AS build
+FROM microsoft/dotnet:2.1-sdk AS build
 ARG PROJECT_VERSION
 ENV DOTNET_CLI_TELEMETRY_OPTOUT = 1
 WORKDIR /src
@@ -24,8 +24,8 @@ RUN dotnet tool install --global dotnet-sonarscanner
 ENV PATH="${PATH}:/root/.dotnet/tools"
 RUN dotnet sonarscanner begin /k:"devops" /v:${PROJECT_VERSION} \
     /d:sonar.host.url=http://localhost:9000 \ 	
-	/d:sonar.cs.vscoveragexml.reportsPaths="/src/**/TestResults/opencover.xml" \
-	/d:sonar.cs.xunit.reportsPaths="/src/**/TestResults/testresult.xml" \ 
+	/d:sonar.cs.opencover.reportsPaths="/src/**/TestResults/opencover.xml" \ 
+	/d:sonar.cs.vstest.reportsPaths="/src/**/TestResults/testresult.xml" \ 
 	/d:sonar.scm.disabled=true /d:sonar.coverage.dtdVerification=true \ 
 	/d:sonar.coverage.exclusions="*Tests*.cs,*testresult*.xml,*opencover*.xml" \ 
 	/d:sonar.test.exclusions="*Tests*.cs,*testresult*.xml,*opencover*.xml"
@@ -34,7 +34,7 @@ RUN dotnet sonarscanner end
 
 RUN dotnet publish calculation-console.csproj -c Release -o /app --no-restore
 
-FROM microsoft/aspnetcore
+FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
 WORKDIR /app
 COPY --from=build /app .
 ENTRYPOINT ["dotnet", "calculation-console.dll"]

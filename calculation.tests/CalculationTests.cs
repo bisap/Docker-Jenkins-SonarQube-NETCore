@@ -10,7 +10,7 @@ namespace calculation.tests
         [Theory]
         [InlineData(1, 1, 2)]
         [InlineData(10, 1, 11)]
-        [InlineData(100, 1, 101)]
+        [InlineData(100, 1, 101)]        
         public void Addition(decimal x, decimal y, decimal result)
         {
             var calculation = new Addition(x, y);
